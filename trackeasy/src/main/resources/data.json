@@ -1,0 +1,12 @@
+{
+  "persons": [
+    { "PersonID": "P1", "Firstname": "John", "Lastname": "Smith", "Id": "ID001" },
+    { "PersonID": "P2", "Firstname": "Emily", "Lastname": "Clark", "Id": "ID002" },
+    { "PersonID": "P3", "Firstname": "David", "Lastname": "Miller", "Id": "ID003" },
+    { "PersonID": "P4", "Firstname": "Sophia", "Lastname": "Wilson", "Id": "ID004" },
+    { "PersonID": "P5", "Firstname": "Oliver", "Lastname": "Brown", "Id": "ID005" }
+  ],
+  "fleetmanagers": ["P1"],
+  "technicians": ["P2"],
+  "conductors": ["P3", "P4", "P5"]
+}
