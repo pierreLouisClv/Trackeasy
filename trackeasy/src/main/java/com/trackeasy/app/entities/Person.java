@@ -25,4 +25,10 @@ public class Person {
 	public char getName(int id){
 		return 0;
 	}
+	public String getPersonID() {
+        return id;
+    }
+	public void setPersonID(String personID) {
+        this.id = personID;
+    }
 }//end Person
