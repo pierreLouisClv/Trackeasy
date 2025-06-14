@@ -61,4 +61,47 @@ public class VehicleDAO {
             e.printStackTrace();
         }
     }
+    
+    public static boolean vehicleHasTracker(String vehicleID) {
+        try (Connection conn = Database.connect()) {
+            String query = "SELECT TrackerID FROM Vehicle WHERE VehicleID = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, vehicleID);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() && rs.getString("TrackerID") != null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; // Par sécurité, on évite d'écraser un tracker
+        }
+    }
+
+    public static boolean installTracker(String trackerID, String type, String technicianID, String vehicleID) {
+        if (vehicleHasTracker(vehicleID)) {
+            return false;
+        }
+
+        try (Connection conn = Database.connect()) {
+            // Étape 1 : Ajouter le tracker
+            String insertTracker = "INSERT INTO Tracker (TrackerID, Type, TechnicianID) VALUES (?, ?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(insertTracker)) {
+                ps.setString(1, trackerID);
+                ps.setString(2, type);
+                ps.setString(3, technicianID);
+                ps.executeUpdate();
+            }
+
+            // Étape 2 : Lier le tracker au véhicule
+            String updateVehicle = "UPDATE Vehicle SET TrackerID = ? WHERE VehicleID = ?";
+            try (PreparedStatement ps = conn.prepareStatement(updateVehicle)) {
+                ps.setString(1, trackerID);
+                ps.setString(2, vehicleID);
+                ps.executeUpdate();
+            }
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

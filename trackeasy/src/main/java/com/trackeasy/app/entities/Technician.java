@@ -20,7 +20,7 @@ public class Technician extends Person {
 	 * 
 	 * @param int
 	 */
-	public void installTracker(int vehiculeId){
-
-	}
+	public boolean installTracker(String trackerID, String type, String vehicleID) {
+        return VehicleDAO.installTracker(trackerID, type, getPersonID(), vehicleID);
+    }
 }//end Technician
