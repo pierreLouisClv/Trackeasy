@@ -67,4 +67,10 @@ public class Vehicle {
     public void setRunning(boolean running) {
         this.running = running;
     }
+
+    @Override
+    public String toString() {
+        return brand + " (" + color + ")";
+    }
+
 }

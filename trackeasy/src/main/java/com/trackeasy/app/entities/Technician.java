@@ -1,5 +1,7 @@
 package com.trackeasy.app.entities;
 
+import com.trackeasy.app.dao.VehicleDAO;
+
 /**
  * @author USER
  * @version 1.0

@@ -1,51 +1,81 @@
 package com.trackeasy.app.UI;
 
 import com.trackeasy.app.Database;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class MainView extends JFrame {
+
     private CardLayout cardLayout;
     private JPanel cards;
 
-    // TO DO : TechView et DrivingView
     public MainView() {
         setTitle("Trackeasy");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(700, 450);
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
 
+        // Initialiser les sous-vues
+        FleetView fleetView = new FleetView();
+        TechView techView = new TechView();
+        DrivingView drivingView = new DrivingView();
+
         // Ajouter les sous-vues
-        cards.add(new FleetView(), "Fleet");
-        cards.add(new TechView(), "Tech");
-        cards.add(new DrivingView(), "Drive");
+        cards.add(fleetView, "Fleet");
+        cards.add(techView, "Tech");
+        cards.add(drivingView, "Drive");
 
         add(cards, BorderLayout.CENTER);
 
-        // Menu de navigation simple
-        JPanel menuPanel = new JPanel();
-        JButton fleetBtn = new JButton("Fleet Manager");
-        JButton techBtn = new JButton("Technician");
-        JButton driveBtn = new JButton("Driver");
+        // Barre d'onglets
+        JPanel tabPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        ButtonGroup tabGroup = new ButtonGroup();
 
-        fleetBtn.addActionListener(e -> cardLayout.show(cards, "Fleet"));
-        techBtn.addActionListener(e -> cardLayout.show(cards, "Tech"));
-        driveBtn.addActionListener(e -> cardLayout.show(cards, "Drive"));
+        JToggleButton fleetTab = new JToggleButton("Fleet Manager");
+        JToggleButton techTab = new JToggleButton("Technician");
+        JToggleButton driveTab = new JToggleButton("Driver");
 
-        menuPanel.add(fleetBtn);
-        menuPanel.add(techBtn);
-        menuPanel.add(driveBtn);
+        tabGroup.add(fleetTab);
+        tabGroup.add(techTab);
+        tabGroup.add(driveTab);
 
-        add(menuPanel, BorderLayout.NORTH);
+        fleetTab.setSelected(true); // Onglet par défaut
+
+        // Styles basiques pour différencier
+        Dimension buttonSize = new Dimension(130, 30);
+        fleetTab.setPreferredSize(buttonSize);
+        techTab.setPreferredSize(buttonSize);
+        driveTab.setPreferredSize(buttonSize);
+
+        fleetTab.addActionListener(e -> {
+            fleetView.refresh();
+            cardLayout.show(cards, "Fleet");
+        });
+
+        techTab.addActionListener(e -> {
+            techView.refresh();
+            cardLayout.show(cards, "Tech");
+        });
+
+        driveTab.addActionListener(e -> {
+            drivingView.refresh();
+            cardLayout.show(cards, "Drive");
+        });
+
+        tabPanel.add(fleetTab);
+        tabPanel.add(techTab);
+        tabPanel.add(driveTab);
+
+        add(tabPanel, BorderLayout.NORTH);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Database.initialize(); // Appel l'init BDD au démarrage
+            Database.initialize();
             MainView view = new MainView();
             view.setVisible(true);
         });

@@ -9,9 +9,13 @@ public class Conductor extends Person {
 
 	public Vehicle m_Vehicle;
 
-	public Conductor(){
+    public Conductor() {
+        super();
+    }
 
-	}
+    public Conductor(String personID, String firstname, String lastname, String id) {
+        super(personID, firstname, lastname, id);
+    }
 
 	public void finalize() throws Throwable {
 		super.finalize();

@@ -7,28 +7,55 @@ package com.trackeasy.app.entities;
  */
 public class Person {
 
-	private char firstName;
-	private int id;
-	private char lastName;
+    private String personID;  // Clé primaire
+    private String firstname;
+    private String lastname;
+    private String id;        // Peut être une pièce d'identité ou similaire
 
-	public Person(){
+    public Person() {
+    }
 
-	}
+    public Person(String personID, String firstname, String lastname, String id) {
+        this.personID = personID;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.id = id;
+    }
 
-	public void finalize() throws Throwable {
+    public String getPersonID() {
+        return personID;
+    }
 
-	}
-	/**
-	 * 
-	 * @param id
-	 */
-	public char getName(int id){
-		return 0;
-	}
-	public String getPersonID() {
+    public void setPersonID(String personID) {
+        this.personID = personID;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getId() {
         return id;
     }
-	public void setPersonID(String personID) {
-        this.id = personID;
+
+    public void setId(String id) {
+        this.id = id;
     }
-}//end Person
+
+    @Override
+    public String toString() {
+        return firstname + " " + lastname;
+    }
+}
